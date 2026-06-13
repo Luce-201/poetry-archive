@@ -1,17 +1,17 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Home - Poetry Archive">
+  <h1>Welcome to the Archive</h1>
+  
+  <p>Explore verses from across the world, with original scripts, translations, and audio recordings.</p>
+
+  <div style="margin-top: 40px;">
+    <h2>Verse of the Day</h2>
+    <blockquote style="font-style: italic; border-left: 4px solid #3b82f6; padding-left: 15px; margin-left: 0;">
+      "Listen to the reed and the tale it tells,<br/>
+      How it sings of separation..."
+    </blockquote>
+  </div>
+</BaseLayout>
