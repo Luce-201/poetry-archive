@@ -16,3 +16,4 @@ collections:
       - name: body
         label: Poem Content
         type: rich-text
+        
