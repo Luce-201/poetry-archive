@@ -1,12 +1,8 @@
-media:
-  folder: public/media
-
 collections:
   - name: poems
     label: Poems
     folder: src/pages/poems
-    extension: md
-    format: frontmatter
+    format: yaml-frontmatter
     fields:
       - name: title
         label: Title
@@ -16,7 +12,7 @@ collections:
         label: Layout Path
         type: string
         default: ../../layouts/BaseLayout.astro
-        hidden: true # Hides this from the dashboard so you don't accidentally change it
+        hidden: true
       - name: body
         label: Poem Content
         type: rich-text
