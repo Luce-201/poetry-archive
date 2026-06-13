@@ -1,19 +1,16 @@
+media:
+  input: public
+  output: /
+
 collections:
   - name: poems
     label: Poems
     folder: src/pages/poems
-    extension: md
     format: frontmatter
     fields:
       - name: title
         label: Title
         type: string
-        required: true
-      - name: layout
-        label: Layout Path
-        type: string
-        default: ../../layouts/BaseLayout.astro
-        hidden: true
       - name: body
         label: Poem Content
         type: rich-text
