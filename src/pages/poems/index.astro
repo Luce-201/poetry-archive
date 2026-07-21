@@ -1,16 +1,17 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-// Astro scans the poems folder for every markdown file
-const poems = await Astro.glob('./*.md');
+// Modern Vite globbing for Astro 5+
+const rawPoems = import.meta.glob('./*.md', { eager: true });
+const poems = Object.values(rawPoems);
 ---
 
 <BaseLayout title="All Poems">
   <h1>Poems Archive</h1>
   <ul>
-    {poems.map((poem) => (
+    {poems.map((poem: any) => (
       <li>
-        <a href={poem.url}>{poem.frontmatter.title || 'Untitled Poem'}</a>
+        <a href={poem.url}>{poem.frontmatter?.title || 'Untitled Poem'}</a>
       </li>
     ))}
   </ul>
