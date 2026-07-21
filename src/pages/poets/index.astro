@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Astro scans the poets folder for every markdown file
+const poets = await Astro.glob('./*.md');
+---
+
+<BaseLayout title="All Poets">
+  <h1>Poets Directory</h1>
+  <ul>
+    {poets.map((poet) => (
+      <li>
+        <a href={poet.url}>{poet.frontmatter.name || poet.frontmatter.title || 'Untitled Poet'}</a>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
