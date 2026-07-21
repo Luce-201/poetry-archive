@@ -1,18 +1,76 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-// Modern Vite globbing for Astro 5+
-const rawPoets = import.meta.glob('./*.md', { eager: true });
-const poets = Object.values(rawPoets);
+// Fetch all poet Markdown files dynamically
+const poetsMap = import.meta.glob('./*.md', { eager: true });
+const poets = Object.values(poetsMap);
 ---
 
-<BaseLayout title="All Poets">
-  <h1>Poets Directory</h1>
-  <ul>
+<BaseLayout pageTitle="Poets Archive">
+  <p class="archive-subtitle">Meet the masters behind the classical verses.</p>
+
+  <div class="card-grid">
     {poets.map((poet: any) => (
-      <li>
-        <a href={poet.url}>{poet.frontmatter?.name || poet.frontmatter?.title || 'Untitled Poet'}</a>
-      </li>
+      <a href={poet.url} class="card">
+        <div class="card-content">
+          <h2>{poet.frontmatter.name || poet.frontmatter.title || 'Unknown Poet'}</h2>
+          {poet.frontmatter.era && <p class="poet-era">{poet.frontmatter.era}</p>}
+        </div>
+        <span class="card-link">View Profile &rarr;</span>
+      </a>
     ))}
-  </ul>
+  </div>
 </BaseLayout>
+
+<style>
+  .archive-subtitle {
+    color: var(--nav-link);
+    font-style: italic;
+    margin-bottom: 2rem;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .card h2 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+    color: var(--accent-color);
+  }
+
+  .poet-era {
+    margin: 0 0 1rem 0;
+    font-size: 0.95rem;
+    color: var(--nav-link);
+  }
+
+  .card-link {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-top: 1rem;
+  }
+</style>
