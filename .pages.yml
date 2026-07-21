@@ -15,3 +15,16 @@ content:
       - name: body
         label: Body
         type: rich-text
+
+  - name: poets
+    label: Poets
+    type: collection
+    path: src/pages/poets
+    format: yaml-frontmatter
+    fields:
+      - name: name
+        label: Name
+        type: string
+      - name: bio
+        label: Biography
+        type: rich-text

@@ -1,0 +1,48 @@
+=== DIRECTORY STRUCTURE ===
+.
+./.astro
+./.astro/collections
+./astro.config.mjs
+./.astro/settings.json
+./.astro/types.d.ts
+./.git
+./.gitignore
+./node_modules
+./package.json
+./package-lock.json
+./.pages.yml
+./project-snapshot.txt
+./public
+./public/favicon.ico
+./public/favicon.svg
+./README.md
+./src
+./src/layouts
+./src/layouts/BaseLayout.astro
+./src/pages
+./src/pages/index.astro
+./src/pages/poems
+./src/pages/poems/first-poem.md
+./tsconfig.json
+./.vscode
+./.vscode/extensions.json
+./.vscode/launch.json
+
+=== .PAGES.YML CONTENT ===
+media:
+  input: public
+  output: /
+
+collections:
+  - name: poems
+    label: Poems
+    folder: src/pages/poems
+    extension: md
+    format: frontmatter
+    fields:
+      - name: title
+        label: Title
+        type: string
+      - name: body
+        label: Body
+        type: rich-text
