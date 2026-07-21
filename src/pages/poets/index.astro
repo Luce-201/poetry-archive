@@ -10,7 +10,7 @@ const poets = Object.values(poetsMap);
   <p class="archive-subtitle">Meet the masters behind the classical verses.</p>
 
   <div class="card-grid">
-    {poets.map((poet: any) => (
+    {poets.map((poet) => (
       <a href={poet.url} class="card">
         <div class="card-content">
           <h2>{poet.frontmatter.name || poet.frontmatter.title || 'Unknown Poet'}</h2>
