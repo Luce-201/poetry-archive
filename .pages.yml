@@ -1,14 +1,13 @@
-
 media:
   input: public
   output: /
 
-collections:
+content:
   - name: poems
     label: Poems
-    folder: src/pages/poems
-    extension: md
-    format: frontmatter
+    type: collection
+    path: src/pages/poems
+    format: yaml-frontmatter
     fields:
       - name: title
         label: Title
