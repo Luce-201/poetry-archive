@@ -13,8 +13,12 @@ content:
         label: Title
         type: string
       - name: poet
-        label: Poet Name
-        type: string
+        label: Poet
+        type: reference
+        options:
+          collection: poets
+          value: "{primary}"
+          label: "{primary}"
       - name: lang
         label: Language Code (e.g. en, ru, el, fa)
         type: string
