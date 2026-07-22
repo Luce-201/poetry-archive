@@ -1,0 +1,107 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+const { frontmatter } = Astro.props;
+const poetName = frontmatter.name || frontmatter.title;
+
+// Fetch all published poems dynamically
+const poemFiles = import.meta.glob('../pages/poems/*.md', { eager: true });
+const poems = Object.values(poemFiles).filter((poem: any) => {
+  return poem.frontmatter?.poet === poetName;
+});
+---
+
+<BaseLayout title={poetName}>
+  <div class="poet-profile">
+    <header class="poet-header">
+      <h1>{poetName}</h1>
+    </header>
+
+    <div class="poet-bio">
+      <slot />
+    </div>
+
+    <hr class="divider" />
+
+    <section class="poet-poems">
+      <h2>Poems by {poetName}</h2>
+      {poems.length > 0 ? (
+        <div class="card-list">
+          {poems.map((poem: any) => (
+            <a href={poem.url} class="card-link">
+              <div class="card-item">
+                <div class="card-content">
+                  <h3 class="card-title">{poem.frontmatter.title}</h3>
+                </div>
+                <span class="card-arrow">Read Poem →</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p class="no-poems">No poems listed for this poet yet.</p>
+      )}
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .poet-profile {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .poet-header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color, #800020);
+  }
+  .poet-bio {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+  .divider {
+    border: 0;
+    border-top: 1px solid var(--border-color, #e0e0e0);
+    margin: 2rem 0;
+  }
+  .poet-poems h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+  }
+  .card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  .card-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem;
+    border: 1px solid var(--border-color, #e0e0e0);
+    border-radius: 8px;
+    background-color: var(--card-bg, #ffffff);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .card-item:hover {
+    transform: translateX(6px);
+    border-color: var(--accent-color, #800020);
+  }
+  .card-title {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  .card-arrow {
+    font-weight: bold;
+    color: var(--accent-color, #800020);
+  }
+  .no-poems {
+    font-style: italic;
+    opacity: 0.8;
+  }
+</style>
