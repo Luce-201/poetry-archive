@@ -2,11 +2,11 @@ media:
   input: public
   output: /
 
-collections:
+content:
   - name: poems
     label: Poems
-    folder: src/pages/poems
-    extension: md
+    type: collection
+    path: src/pages/poems
     format: yaml-frontmatter
     fields:
       - name: title
@@ -30,4 +30,17 @@ collections:
         default: ltr
       - name: body
         label: Body
+        type: rich-text
+
+  - name: poets
+    label: Poets
+    type: collection
+    path: src/pages/poets
+    format: yaml-frontmatter
+    fields:
+      - name: name
+        label: Poet Name
+        type: string
+      - name: bio
+        label: Biography
         type: rich-text
