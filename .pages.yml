@@ -2,29 +2,32 @@ media:
   input: public
   output: /
 
-content:
+collections:
   - name: poems
     label: Poems
-    type: collection
-    path: src/pages/poems
+    folder: src/pages/poems
+    extension: md
     format: yaml-frontmatter
     fields:
       - name: title
         label: Title
         type: string
+      - name: poet
+        label: Poet Name
+        type: string
+      - name: lang
+        label: Language Code (e.g. en, ru, el, fa)
+        type: string
+        default: en
+      - name: dir
+        label: Text Direction
+        type: select
+        options:
+          - label: Left to Right (LTR - English, Russian, Greek)
+            value: ltr
+          - label: Right to Left (RTL - Persian, Arabic)
+            value: rtl
+        default: ltr
       - name: body
         label: Body
-        type: rich-text
-
-  - name: poets
-    label: Poets
-    type: collection
-    path: src/pages/poets
-    format: yaml-frontmatter
-    fields:
-      - name: name
-        label: Name
-        type: string
-      - name: bio
-        label: Biography
         type: rich-text

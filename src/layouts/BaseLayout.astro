@@ -1,13 +1,33 @@
 ---
-const { pageTitle } = Astro.props;
+// Get poem metadata (frontmatter) or page props
+const { frontmatter = {}, pageTitle } = Astro.props;
+
+// Get title and poet for auto-detection
+const title = frontmatter.title || pageTitle || '';
+const poet = frontmatter.poet || '';
+const sampleText = `${title} ${poet}`;
+
+// Detect Unicode ranges
+const isPersian  = /[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF]/.test(sampleText);
+const isCyrillic = /[\u0400-\u04FF]/.test(sampleText);
+const isGreek    = /[\u0370-\u03FF\u1F00-\u1FFF]/.test(sampleText);
+
+// Automatically set text direction and language code (with manual frontmatter override support)
+const autoDir  = frontmatter.dir || (isPersian ? 'rtl' : 'ltr');
+const autoLang = frontmatter.lang || (isPersian ? 'fa' : isCyrillic ? 'ru' : isGreek ? 'el' : 'en');
+const displayTitle = title || 'Poetry Archive';
 ---
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang={autoLang} dir={autoDir}>
   <head>
     <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400..700;1,400..700&family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
-    <title>{pageTitle}</title>
+    <title>{displayTitle}</title>
 
     <script is:inline>
       const theme = (() => {
@@ -37,6 +57,10 @@ const { pageTitle } = Astro.props;
         --border-color: #e3dad0;
         --nav-link: #5a524c;
         --button-bg: #efe8dc;
+        
+        /* Typography variables */
+        --font-serif: 'Lora', Georgia, serif;
+        --font-persian: 'Amiri', 'Vazirmatn', serif;
       }
 
       /* --- Night Reading Dark Theme --- */
@@ -53,11 +77,24 @@ const { pageTitle } = Astro.props;
       body {
         background-color: var(--bg-color);
         color: var(--text-color);
-        font-family: 'Georgia', serif;
+        font-family: var(--font-serif);
         line-height: 1.7;
         margin: 0;
         padding: 0;
         transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      /* Persian / Right-to-Left (RTL) Styling */
+      [dir="rtl"], .rtl {
+        direction: rtl;
+        text-align: right;
+        font-family: var(--font-persian);
+        line-height: 2.2; /* Extra breathing room for Persian ligatures */
+      }
+
+      /* Cyrillic & Greek Styling */
+      [lang="ru"], [lang="el"], [lang="grc"] {
+        font-family: var(--font-serif);
       }
 
       /* Header & Navigation */
@@ -161,8 +198,8 @@ const { pageTitle } = Astro.props;
       </nav>
     </header>
 
-    <main>
-      <h1>{pageTitle}</h1>
+    <main dir="auto">
+      <h1>{displayTitle}</h1>
       <slot />
     </main>
 
