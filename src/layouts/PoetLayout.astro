@@ -2,12 +2,13 @@
 import BaseLayout from './BaseLayout.astro';
 
 const { frontmatter } = Astro.props;
-const poetName = frontmatter.name || frontmatter.title;
+const poetName = (frontmatter.name || frontmatter.title || '').trim();
 
 // Fetch all published poems dynamically
 const poemFiles = import.meta.glob('../pages/poems/*.md', { eager: true });
 const poems = Object.values(poemFiles).filter((poem: any) => {
-  return poem.frontmatter?.poet === poetName;
+  const poemPoet = (poem.frontmatter?.poet || '').trim();
+  return poemPoet && (poemPoet.toLowerCase() === poetName.toLowerCase());
 });
 ---
 

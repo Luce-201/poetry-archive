@@ -17,8 +17,8 @@ content:
         type: reference
         options:
           collection: poets
-          value: "{primary}"
-          label: "{primary}"
+          value: "{name}"
+          label: "{name}"
       - name: lang
         label: Language Code (e.g. en, ru, el, fa)
         type: string
@@ -41,7 +41,14 @@ content:
     type: collection
     path: src/pages/poets
     format: yaml-frontmatter
+    view:
+      primary: name
     fields:
+      - name: layout
+        label: Layout
+        type: string
+        hidden: true
+        default: "../../layouts/PoetLayout.astro"
       - name: name
         label: Poet Name
         type: string
